@@ -43,24 +43,7 @@ class DatabaseHelper {
           )
         ''');
 
-        await db.insert('users', {'email': 'fatec@pokemon.com', 'senha': 'pikachu'});
-
-        List<Map<String, dynamic>> pokemons = [
-          {'id': 1, 'nome': 'Bulbasaur', 'tipo': 'Grass/Poison', 'imagem': 'assets/images/bulbasaur.png'},
-          {'id': 2, 'nome': 'Ivysaur', 'tipo': 'Grass/Poison', 'imagem': 'assets/images/ivysaur.png'},
-          {'id': 3, 'nome': 'Venusaur', 'tipo': 'Grass/Poison', 'imagem': 'assets/images/venusaur.png'},
-          {'id': 4, 'nome': 'Charmander', 'tipo': 'Fire', 'imagem': 'assets/images/charmander.png'},
-          {'id': 5, 'nome': 'Charmeleon', 'tipo': 'Fire', 'imagem': 'assets/images/charmeleon.png'},
-          {'id': 6, 'nome': 'Charizard', 'tipo': 'Fire/Flying', 'imagem': 'assets/images/charizard.png'},
-          {'id': 7, 'nome': 'Squirtle', 'tipo': 'Water', 'imagem': 'assets/images/squirtle.png'},
-          {'id': 8, 'nome': 'Wartortle', 'tipo': 'Water', 'imagem': 'assets/images/wartortle.png'},
-          {'id': 9, 'nome': 'Blastoise', 'tipo': 'Water', 'imagem': 'assets/images/blastoise.png'},
-          {'id': 10, 'nome': 'Caterpie', 'tipo': 'Bug', 'imagem': 'assets/images/caterpie.png'},
-        ];
-
-        for (var p in pokemons) {
-          await db.insert('pokemons', p);
-        }
+        await db.insert('usuarios', {'email': 'fatec@pokemon.com', 'senha': 'pikachu'});
       },
     );
   }
@@ -68,7 +51,7 @@ class DatabaseHelper {
   Future<Usuario?> getUser(String email, String senha) async {
     final db = await database;
     final result = await db.query(
-      'users',
+      'usuarios',
       where: 'email = ? AND senha = ?',
       whereArgs: [email, senha],
     );
@@ -82,6 +65,39 @@ class DatabaseHelper {
     return null;
   }
 
+  Future<void> salvarPokemons(List<Pokemon> lista) async {
+    final db = await database;
+    for (var p in lista) {
+      await db.insert(
+        'pokemons',
+        p.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+  }
+
+  Future<List<Pokemon>> listarPokemons() async {
+    final db = await database;
+    final maps = await db.query('pokemons');
+    return maps.map((e) => Pokemon.fromMap(e)).toList();
+  }
+
+  Future<void> sincronizarComAPI() async {
+    final url = 'http://35.198.50.242:3000/pokemons';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        final pokemons = data.map((e) => Pokemon.fromJson(e)).toList();
+        await salvarPokemons(pokemons);
+      }
+    } catch (e) {
+      print('Erro ao buscar da API: \$e');
+    }
+  }
+
   Future<List<Pokemon>> getPokemons() async {
     final db = await database;
     final result = await db.query('pokemons');
@@ -92,33 +108,4 @@ class DatabaseHelper {
       imagem: e['imagem'] as String,
     )).toList();
   }
-
-  Future<void> syncToMySQL() async {
-    final db = await database;
-
-    final usuarios = await db.query('usuarios');
-    for (var usuario in usuarios) {
-      await http.post(
-        Uri.parse('https://url-do-servidor.com/api/sync_user.php'),
-        body: {
-          'id': usuario['id'].toString(),
-          'email': usuario['email'].toString(),
-          'senha': usuario['senha'].toString(),
-        },
-      );
-    }
-
-    final pokemons = await db.query('pokemons');
-    for (var p in pokemons) {
-      await http.post(
-        Uri.parse('https://url-do-servidor.com/api/sync_pokemon.php'),
-        body: {
-          'id': p['id'].toString(),
-          'nome': p['nome'].toString(),
-          'tipo': p['tipo'].toString(),
-          'imagem': p['imagem'].toString().split('/').last,
-        },
-      );
-    }
-  }
-}
+} 
