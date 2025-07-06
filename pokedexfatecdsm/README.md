@@ -1,16 +1,81 @@
-# pokedexfatecdsm
+# 📱 Pokedex Fatec DSM
 
-A new Flutter project.
+Projeto Flutter para disciplina de Desenvolvimento de Software para Mobile — **FATEC Itapira**  
+> Um app de Pokédex que funciona **offline** com SQLite e sincroniza com banco **MySQL na nuvem**
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 💡 Funcionalidades
 
-A few resources to get you started if this is your first Flutter project:
+✅ Login com email e senha  
+✅ Listagem dos 151 Pokémons da 1ª geração  
+✅ Imagens salvas localmente (funciona sem internet)  
+✅ Banco de dados local (SQLite)  
+✅ Banco de dados remoto (MySQL via API em VM)  
+✅ Sincronização automática de dados  
+✅ Interface em modo escuro (Dark Mode)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠️ Tecnologias Utilizadas
+
+### 💻 Backend (API)
+- Node.js + Express
+- MySQL
+- Hospedado em VM Linux (Google Cloud)
+
+### 📱 Mobile (Flutter)
+- Flutter 3.8+
+- sqflite
+- path_provider
+- http
+
+---
+
+## 🔐 Login de Teste
+
+```
+Email: fatec@pokemon.com  
+Senha: pikachu
+```
+
+---
+
+## 🌐 Como Funciona
+
+| Componente | Papel |
+|------------|-------|
+| **Flutter** | App mobile com SQLite e interface |
+| **SQLite** | Armazena os dados localmente para uso offline |
+| **API (VM)** | Expõe rotas para consultar e sincronizar Pokémons |
+| **MySQL (VM)** | Armazena os dados de forma centralizada |
+
+---
+
+## 🧪 Testes
+
+- ✅ Testado em emulador Android
+- ✅ Testado em celular real (APK)
+- ✅ Funciona offline e online
+- ✅ Imagens e dados carregam normalmente
+- ✅ Login funcional
+
+---
+
+## 🧠 Desenvolvedores
+
+- Renan Teixeira  
+- Rodrigo Rodrigues  
+
+---
+
+## 📦 Instalação do APK
+
+1. Baixe o arquivo `pokedex.apk`  
+2. Instale no seu celular Android (ativar fontes desconhecidas)  
+3. Abra e faça login com os dados acima  
+4. Aproveite a jornada Pokémon!
+
+---
+
+## 🎓 Projeto acadêmico — FATEC Itapira - 2025.1
