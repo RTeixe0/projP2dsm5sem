@@ -1,6 +1,6 @@
 # 📱 Pokedex Fatec DSM
 
-Projeto Flutter para disciplina de Desenvolvimento de Software para Mobile — **FATEC Itapira**  
+Projeto Flutter para disciplina de Programação para dispositivos moveis — **FATEC Itapira**  
 > Um app de Pokédex que funciona **offline** com SQLite e sincroniza com banco **MySQL na nuvem**
 
 ---
@@ -62,20 +62,8 @@ Senha: pikachu
 
 ---
 
-## 🧠 Desenvolvedores
+## 🧠 Desenvolvedor
 
 - Renan Teixeira  
-- Rodrigo Rodrigues  
 
 ---
-
-## 📦 Instalação do APK
-
-1. Baixe o arquivo `pokedex.apk`  
-2. Instale no seu celular Android (ativar fontes desconhecidas)  
-3. Abra e faça login com os dados acima  
-4. Aproveite a jornada Pokémon!
-
----
-
-## 🎓 Projeto acadêmico — FATEC Itapira - 2025.1
