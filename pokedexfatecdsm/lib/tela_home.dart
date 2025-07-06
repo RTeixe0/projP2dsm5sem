@@ -27,7 +27,7 @@ class _TelaHomeState extends State<TelaHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Pokémons")),
+      appBar: AppBar(title: const Text("Pokemons")),
       body: FutureBuilder<List<Pokemon>>(
         future: _futurePokemons,
         builder: (context, snapshot) {
